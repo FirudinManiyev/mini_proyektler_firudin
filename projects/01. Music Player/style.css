@@ -1,0 +1,249 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: #f2bcbc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.player {
+    width: 700px;
+    background: #a65923;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 25px 40px rgba(0, 0, 0, .35);
+}
+
+.record-area {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 320px;
+}
+
+.record {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: #111;
+    position: relative;
+    box-shadow:
+        inset 0 0 8px rgba(255, 255, 255, .08),
+        0 10px 20px rgba(0, 0, 0, .5);
+}
+
+.record.playing {
+    animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.ring {
+    position: absolute;
+    border: 2px solid rgba(255, 255, 255, .06);
+    border-radius: 50%;
+}
+
+.ring1 {
+    inset: 8px;
+}
+
+.ring2 {
+    inset: 18px;
+}
+
+.ring3 {
+    inset: 28px;
+}
+
+.ring4 {
+    inset: 38px;
+}
+
+.ring5 {
+    inset: 48px;
+}
+
+.ring6 {
+    inset: 58px;
+}
+
+.ring7 {
+    inset: 68px;
+}
+
+.label {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #e9414d;
+    border: 4px solid white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.label::after {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background: black;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.tonearm{
+    position:absolute;
+    right:35px;
+    top:10px;
+    width:150px;
+    height:220px;
+    transform-origin:25px 20px;
+    transform:rotate(-28deg);
+    transition:.5s ease;
+}
+
+.tonearm.active {
+    transform: rotate(8deg);
+}
+
+.arm {
+    width: 20px;
+    height: 150px;
+    background: #ddd;
+    border-radius: 10px;
+    margin: auto;
+}
+
+.head {
+    width: 36px;
+    height: 56px;
+    background: #333;
+    border-radius: 6px;
+    margin: auto;
+    margin-top: -6px;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+#playBtn {
+    width: 80px;
+    height: 80px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 28px;
+    background: #fff8dc;
+    color: #0b3a77;
+    display: block;
+    margin: 0 auto 25px;
+    transition: .3s;
+}
+
+#playBtn:hover {
+    transform: scale(1.08);
+}
+
+.progress-container {
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, .25);
+    border-radius: 30px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.progress {
+    width: 0;
+    height: 100%;
+    background: white;
+}
+
+.time {
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 14px;
+}
+
+.volume {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: white;
+}
+
+.volume input {
+    flex: 1;
+    cursor: pointer;
+}
+
+@media(max-width:760px) {
+
+    .player {
+
+        width: 95%;
+        padding: 25px;
+
+    }
+
+    .record-area {
+
+        flex-direction: column;
+        gap: 40px;
+        min-height: auto;
+
+    }
+
+    .tonearm {
+
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: rotate(-35deg);
+
+    }
+
+    .tonearm.active {
+
+        transform: rotate(0deg);
+
+    }
+
+    .record {
+
+        width: 220px;
+        height: 220px;
+
+    }
+
+}
