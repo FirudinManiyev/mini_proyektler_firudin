@@ -24,9 +24,9 @@ body {
 .record-area {
     position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    min-height: 320px;
+    min-height: 340px;
 }
 
 .record {
@@ -117,36 +117,49 @@ body {
     position: absolute;
 }
 
-.tonearm{
-    position:absolute;
-    right:35px;
-    top:10px;
-    width:150px;
-    height:220px;
-    transform-origin:25px 20px;
-    transform:rotate(-28deg);
-    transition:.5s ease;
+.tonearm {
+    position: absolute;
+    top: 18px;
+    left: 52%;
+    width: 140px;
+    height: 180px;
+    transform-origin: 15px 15px;
+    transform: rotate(-35deg);
+    transition: transform .5s ease;
+    z-index: 10;
 }
 
 .tonearm.active {
-    transform: rotate(8deg);
+    transform: rotate(-8deg);
 }
 
 .arm {
-    width: 20px;
-    height: 150px;
-    background: #ddd;
+    width: 10px;
+    height: 145px;
+    background: linear-gradient(to bottom, #f2f2f2, #9d9d9d);
+    margin-left: 10px;
     border-radius: 10px;
-    margin: auto;
 }
 
 .head {
-    width: 36px;
-    height: 56px;
-    background: #333;
-    border-radius: 6px;
-    margin: auto;
-    margin-top: -6px;
+    width: 28px;
+    height: 38px;
+    background: #2d2d2d;
+    border-radius: 4px;
+    margin-left: 1px;
+    margin-top: -2px;
+    position: relative;
+}
+
+.head::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 12px;
+
+    width: 3px;
+    height: 12px;
+    background: silver;
 }
 
 .controls {
@@ -184,6 +197,17 @@ body {
     width: 0;
     height: 100%;
     background: white;
+}
+
+.pivot {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    left: 2px;
+    top: 2px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, .3);
 }
 
 .time {
