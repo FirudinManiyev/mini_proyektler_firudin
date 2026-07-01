@@ -1,95 +1,239 @@
+// ===========================
+// ELEMENTLƏR
+// ===========================
+
 const cups = [...document.querySelectorAll(".cup")];
 const coins = [...document.querySelectorAll(".coin")];
 
 const message = document.getElementById("message");
-
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
 
-let coinIndex = 0;
+
+// ===========================
+// OYUN DƏYİŞƏNLƏRİ
+// ===========================
+
+let coinCup = 0;
 let canChoose = false;
+let isShuffling = false;
 
-// Başlanğıc
-resetGame();
 
-startBtn.addEventListener("click", startGame);
-restartBtn.addEventListener("click", resetGame);
+// Hər stəkanın cari mövqeyi
+// 0 = sol
+// 1 = orta
+// 2 = sağ
+
+let positions = [0, 1, 2];
+
+
+// Desktop koordinatları
+
+const desktopX = [40, 285, 530];
+
+
+// Mobil koordinatları
+
+const mobileX = [0, 115, 230];
+
+
+// ===========================
+// KOORDİNAT
+// ===========================
+
+function getCoords() {
+
+    if (window.innerWidth <= 768) {
+
+        return mobileX;
+
+    }
+
+    return desktopX;
+
+}
+
+
+// ===========================
+// STƏKANLARI YERLƏŞDİR
+// ===========================
+
+function renderPositions() {
+
+    const coords = getCoords();
+
+    cups.forEach((cup, index) => {
+
+        cup.style.transform =
+            `translateX(${coords[positions[index]]}px)`;
+
+    });
+
+}
+
+
+// İlk yerləşmə
+
+renderPositions();
+
+
+// Ekran dəyişəndə yenilə
+
+window.addEventListener("resize", renderPositions);
+
+
+// ===========================
+// RESET
+// ===========================
 
 function resetGame() {
 
     canChoose = false;
 
+    isShuffling = false;
+
     message.textContent =
-        "Coin hansı stəkanın altındadır? Qarışdırıldıqdan sonra tap.";
+        "Coin hansı stəkanın altındadır?";
 
-    coins.forEach(c => c.classList.remove("show"));
+    positions = [0, 1, 2];
 
-    cups.forEach((cup, index) => {
+    renderPositions();
+
+    coinCup = Math.floor(Math.random() * 3);
+
+    cups.forEach(cup => {
 
         cup.classList.remove("correct");
         cup.classList.remove("wrong");
+        cup.classList.remove("shuffle");
 
-        cup.style.order = index;
+    });
+
+    coins.forEach(c => {
+
+        c.classList.remove("show");
 
     });
 
 }
 
-function startGame() {
 
+// ===========================
+// BUTTONLAR
+// ===========================
+
+restartBtn.addEventListener("click", resetGame);
+
+startBtn.addEventListener("click", () => {
+
+    if (isShuffling) return;
+
+    startShuffle();
+
+});
+
+
+// İlk dəfə
+
+resetGame();
+
+
+// ===========================
+// RANDOM
+// ===========================
+
+function randomPair() {
+
+    const pairs = [
+
+        [0, 1],
+        [1, 2],
+        [0, 2]
+
+    ];
+
+    return pairs[
+        Math.floor(Math.random() * pairs.length)
+    ];
+
+}
+
+
+// ===========================
+// SWAP
+// ===========================
+
+function swapPositions(a, b) {
+
+    const temp = positions[a];
+
+    positions[a] = positions[b];
+
+    positions[b] = temp;
+
+}
+
+// ===========================
+// GÖZLƏ
+// ===========================
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// ===========================
+// QARIŞDIRMA
+// ===========================
+
+async function startShuffle() {
+
+    isShuffling = true;
     canChoose = false;
-
-    coins.forEach(c => c.classList.remove("show"));
-
-    cups.forEach(c => {
-
-        c.classList.remove("correct");
-        c.classList.remove("wrong");
-
-    });
 
     message.textContent = "Qarışdırılır...";
 
-    coinIndex = Math.floor(Math.random() * 3);
+    cups.forEach(cup => {
+        cup.classList.remove("correct");
+        cup.classList.remove("wrong");
+    });
 
-    shuffleAnimation();
+    coins.forEach(c => c.classList.remove("show"));
 
-}
+    // 12 dəfə qarışdır
 
-function shuffleAnimation() {
+    for (let i = 0; i < 12; i++) {
 
-    let count = 0;
+        const [a, b] = randomPair();
 
-    const interval = setInterval(() => {
+        cups[a].classList.add("shuffle");
+        cups[b].classList.add("shuffle");
 
-        const orders = [0, 1, 2];
+        swapPositions(a, b);
 
-        orders.sort(() => Math.random() - 0.5);
+        renderPositions();
 
-        cups.forEach((cup, i) => {
+        await sleep(650);
 
-            cup.style.order = orders[i];
+        cups[a].classList.remove("shuffle");
+        cups[b].classList.remove("shuffle");
 
-        });
+        await sleep(60);
 
-        count++;
+    }
 
-        if (count >= 12) {
+    isShuffling = false;
+    canChoose = true;
 
-            clearInterval(interval);
-
-            message.textContent =
-                "İndi bir stəkanı seç.";
-
-            canChoose = true;
-
-        }
-
-    }, 300);
+    message.textContent =
+        "İndi coin olan stəkanı seç.";
 
 }
 
-cups.forEach(cup => {
+// ===========================
+// KLİK
+// ===========================
+
+cups.forEach((cup, index) => {
 
     cup.addEventListener("click", () => {
 
@@ -97,26 +241,32 @@ cups.forEach(cup => {
 
         canChoose = false;
 
-        const clickedIndex = Number(cup.dataset.index);
+        coins[coinCup].classList.add("show");
 
-        coins[coinIndex].classList.add("show");
-
-        if (clickedIndex === coinIndex) {
+        if (index === coinCup) {
 
             cup.classList.add("correct");
 
-            message.textContent = "🎉 Təbriklər! Coini tapdın.";
+            message.textContent =
+                "🎉 Təbriklər! Düz tapdın.";
 
         } else {
 
             cup.classList.add("wrong");
 
-            cups[coinIndex].classList.add("correct");
+            cups[coinCup].classList.add("correct");
 
-            message.textContent = "❌ Təəssüf! Coin başqa stəkanın altında idi.";
+            message.textContent =
+                "❌ Təəssüf. Coin başqa stəkanın altında idi.";
 
         }
 
     });
 
 });
+
+// ===========================
+// DEBUG (istəsən sil)
+// ===========================
+
+// console.log("Coin:",coinCup);

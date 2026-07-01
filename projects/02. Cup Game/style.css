@@ -1,3 +1,7 @@
+/* ==========================
+   RESET
+========================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -5,67 +9,193 @@
 }
 
 body {
+
     font-family: "Poppins", sans-serif;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
+
     min-height: 100vh;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
     overflow: hidden;
+
+    background:
+        radial-gradient(circle at top, #5dc9ff, #2d72ff);
+
 }
 
+/* ==========================
+   CONTAINER
+========================== */
+
 .container {
-    width: min(900px, 90%);
+
+    width: min(900px, 95%);
+
     text-align: center;
+
 }
 
 h1 {
-    color: white;
+
+    color: #fff;
+
     font-size: 3rem;
+
     margin-bottom: 15px;
+
 }
 
 #message {
-    color: white;
-    font-size: 1.1rem;
-    margin-bottom: 45px;
+
+    color: #fff;
+
+    font-size: 18px;
+
+    margin-bottom: 40px;
+
 }
+
+/* ==========================
+   GAME TABLE
+========================== */
 
 .game-area {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 70px;
-    margin-bottom: 50px;
-    min-height: 260px;
-}
 
-.cup {
-    width: 120px;
-    height: 170px;
     position: relative;
-    cursor: pointer;
-    transition: .5s;
+
+    width: 700px;
+
+    height: 330px;
+
+    margin: auto;
+
 }
 
-.cup:hover {
-    transform: translateY(-10px);
-}
+/* Taxta masa */
 
-.cup-top {
+.game-area::after {
+
+    content: "";
+
     position: absolute;
+
+    left: 50%;
+
     bottom: 0;
+
+    transform: translateX(-50%);
+
     width: 100%;
-    height: 150px;
 
-    background: linear-gradient(to bottom, #ff6b6b, #c0392b);
+    height: 70px;
 
-    border-radius: 0 0 60px 60px;
+    background: linear-gradient(#9c5a2e, #603913);
+
+    border-radius: 20px;
 
     box-shadow:
-        inset 0 10px 10px rgba(255, 255, 255, .25),
-        0 12px 20px rgba(0, 0, 0, .25);
+
+        inset 0 6px 12px rgba(255, 255, 255, .18),
+
+        0 10px 30px rgba(0, 0, 0, .35);
+
 }
+
+/* ==========================
+   CUPS
+========================== */
+
+.cup {
+
+    position: absolute;
+
+    bottom: 55px;
+
+    width: 130px;
+
+    height: 175px;
+
+    cursor: pointer;
+
+    transition:
+
+        transform .65s cubic-bezier(.65, -0.25, .25, 1.2);
+
+}
+
+/* Başlanğıc koordinatlar */
+
+.cup[data-index="0"] {
+
+    transform: translateX(40px);
+
+}
+
+.cup[data-index="1"] {
+
+    transform: translateX(285px);
+
+}
+
+.cup[data-index="2"] {
+
+    transform: translateX(530px);
+
+}
+
+/* Qarışdırma zamanı */
+
+.cup.moving {
+
+    z-index: 20;
+
+}
+
+/* Havaya qalxma */
+
+.cup.lift {
+
+    margin-bottom: 35px;
+
+}
+
+/* ==========================
+   CUP BODY
+========================== */
+
+.cup-top {
+
+    position: absolute;
+
+    bottom: 0;
+
+    width: 100%;
+
+    height: 160px;
+
+    background:
+
+        linear-gradient(to bottom,
+
+            #ff7b7b,
+
+            #d63031);
+
+    border-radius: 0 0 70px 70px;
+
+    box-shadow:
+
+        inset 0 12px 15px rgba(255, 255, 255, .28),
+
+        0 12px 20px rgba(0, 0, 0, .28);
+
+}
+
+/* Üst hissə */
 
 .cup-top::before {
 
@@ -73,19 +203,21 @@ h1 {
 
     position: absolute;
 
-    top: -12px;
+    top: -14px;
 
     left: -8px;
 
-    width: 136px;
+    width: 146px;
 
-    height: 24px;
+    height: 28px;
 
     border-radius: 50%;
 
-    background: #ff8787;
+    background: #ff9d9d;
 
 }
+
+/* Qulp */
 
 .cup-top::after {
 
@@ -93,15 +225,15 @@ h1 {
 
     position: absolute;
 
-    top: 35px;
+    top: 45px;
 
-    right: -18px;
+    right: -20px;
 
-    width: 30px;
+    width: 32px;
 
-    height: 55px;
+    height: 60px;
 
-    border: 8px solid #ff6b6b;
+    border: 8px solid #ff7b7b;
 
     border-left: none;
 
@@ -109,29 +241,41 @@ h1 {
 
 }
 
+/* ==========================
+   COIN
+========================== */
+
 .coin {
 
     position: absolute;
 
-    bottom: 10px;
+    bottom: 8px;
 
     left: 50%;
 
     transform: translateX(-50%) scale(0);
 
-    width: 55px;
+    width: 58px;
 
-    height: 55px;
+    height: 58px;
 
     border-radius: 50%;
 
-    background: linear-gradient(#ffe066, #f9c74f);
+    background:
 
-    border: 4px solid #f6b500;
+        linear-gradient(#ffe066,
 
-    transition: .35s;
+            #f6c343);
 
-    z-index: -1;
+    border: 4px solid #d89b00;
+
+    transition: .3s;
+
+}
+
+.coin.show {
+
+    transform: translateX(-50%) scale(1);
 
 }
 
@@ -149,7 +293,7 @@ h1 {
 
     align-items: center;
 
-    font-size: 22px;
+    font-size: 24px;
 
     font-weight: 700;
 
@@ -157,13 +301,13 @@ h1 {
 
 }
 
-.coin.show {
-
-    transform: translateX(-50%) scale(1);
-
-}
+/* ==========================
+   BUTTONS
+========================== */
 
 .buttons {
+
+    margin-top: 40px;
 
     display: flex;
 
@@ -177,35 +321,41 @@ h1 {
 
 button {
 
-    padding: 15px 30px;
+    padding: 15px 34px;
 
     border: none;
 
-    border-radius: 12px;
+    border-radius: 14px;
 
     font-size: 17px;
 
-    cursor: pointer;
-
     font-weight: 600;
 
+    cursor: pointer;
+
     transition: .3s;
+
+    font-family: inherit;
 
 }
 
 #startBtn {
 
-    background: #2ecc71;
+    background: #27ae60;
 
-    color: white;
+    color: #fff;
+
+    box-shadow: 0 10px 25px rgba(39, 174, 96, .35);
 
 }
 
 #restartBtn {
 
-    background: #34495e;
+    background: #2c3e50;
 
-    color: white;
+    color: #fff;
+
+    box-shadow: 0 10px 25px rgba(44, 62, 80, .35);
 
 }
 
@@ -215,50 +365,237 @@ button:hover {
 
 }
 
+button:active {
+
+    transform: scale(.96);
+
+}
+
+/* ==========================
+   RESULT
+========================== */
+
+.correct {
+
+    animation: correct .5s ease;
+
+}
+
 .correct .cup-top {
 
     background: linear-gradient(#2ecc71, #27ae60);
 
 }
 
-.wrong .cup-top {
+.wrong {
 
-    background: linear-gradient(#ff4757, #c0392b);
+    animation: wrong .5s ease;
 
 }
 
+.wrong .cup-top {
+
+    background: linear-gradient(#ff5f6d, #c0392b);
+
+}
+
+/* ==========================
+   ANIMATIONS
+========================== */
+
+@keyframes correct {
+
+    0% {
+
+        transform: scale(1);
+
+    }
+
+    50% {
+
+        transform: scale(1.08);
+
+    }
+
+    100% {
+
+        transform: scale(1);
+
+    }
+
+}
+
+@keyframes wrong {
+
+    0% {
+
+        transform: translateX(0);
+
+    }
+
+    25% {
+
+        transform: translateX(-8px);
+
+    }
+
+    50% {
+
+        transform: translateX(8px);
+
+    }
+
+    75% {
+
+        transform: translateX(-8px);
+
+    }
+
+    100% {
+
+        transform: translateX(0);
+
+    }
+
+}
+
+/* Qarışdırma zamanı stəkan havaya qalxır */
+
+@keyframes liftCup {
+
+    0% {
+
+        translate: 0 0;
+
+    }
+
+    50% {
+
+        translate: 0 -40px;
+
+    }
+
+    100% {
+
+        translate: 0 0;
+
+    }
+
+}
+
+.cup.shuffle {
+
+    animation: liftCup .6s ease;
+
+}
+
+/* Coin görünəndə */
+
+@keyframes coinPop {
+
+    0% {
+
+        transform: translateX(-50%) scale(0);
+
+    }
+
+    70% {
+
+        transform: translateX(-50%) scale(1.15);
+
+    }
+
+    100% {
+
+        transform: translateX(-50%) scale(1);
+
+    }
+
+}
+
+.coin.show {
+
+    animation: coinPop .4s ease;
+
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
 @media(max-width:768px) {
+
+    .container {
+
+        width: 95%;
+
+    }
+
+    h1 {
+
+        font-size: 2.2rem;
+
+    }
+
+    #message {
+
+        font-size: 15px;
+
+    }
 
     .game-area {
 
-        gap: 25px;
+        width: 320px;
+
+        height: 250px;
 
     }
 
     .cup {
 
-        width: 90px;
-        height: 140px;
+        width: 85px;
+
+        height: 120px;
+
+        bottom: 45px;
+
+    }
+
+    .cup[data-index="0"] {
+
+        transform: translateX(0);
+
+    }
+
+    .cup[data-index="1"] {
+
+        transform: translateX(115px);
+
+    }
+
+    .cup[data-index="2"] {
+
+        transform: translateX(230px);
 
     }
 
     .cup-top {
 
-        height: 125px;
+        height: 110px;
 
     }
 
     .cup-top::before {
 
-        width: 104px;
+        width: 100px;
 
     }
 
     .cup-top::after {
 
-        height: 42px;
-
         width: 22px;
+
+        height: 42px;
 
         right: -14px;
 
@@ -267,13 +604,20 @@ button:hover {
     .coin {
 
         width: 42px;
+
         height: 42px;
 
     }
 
-    h1 {
+    .coin::after {
 
-        font-size: 2.2rem;
+        font-size: 18px;
+
+    }
+
+    button {
+
+        width: 100%;
 
     }
 
