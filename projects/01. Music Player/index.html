@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,86 +9,82 @@
     <link rel="stylesheet" href="style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
+
 <body>
 
-<div class="player">
+    <div class="player">
 
-    <div class="record-area">
+        <div class="record-area">
 
-        <div class="record" id="record">
+            <div class="record" id="record">
 
-            <div class="ring ring1"></div>
-            <div class="ring ring2"></div>
-            <div class="ring ring3"></div>
-            <div class="ring ring4"></div>
-            <div class="ring ring5"></div>
-            <div class="ring ring6"></div>
-            <div class="ring ring7"></div>
+                <div class="ring ring1"></div>
+                <div class="ring ring2"></div>
+                <div class="ring ring3"></div>
+                <div class="ring ring4"></div>
+                <div class="ring ring5"></div>
+                <div class="ring ring6"></div>
+                <div class="ring ring7"></div>
 
-            <div class="label">
-                <h3>Firudin</h3>
-                <span>Music</span>
+                <div class="label">
+                    <h3>Firudin</h3>
+                    <span>Music</span>
+                </div>
+
+            </div>
+
+            <div class="tonearm" id="tonearm">
+                <div class="pivot"></div>
+                <div class="arm"></div>
+                <div class="head"></div>
             </div>
 
         </div>
 
-        <div class="tonearm" id="tonearm">
-            <div class="pivot"></div>
-            <div class="arm"></div>
-            <div class="head"></div>
-        </div>
+        <div class="controls">
 
-    </div>
+            <button id="playBtn">
+                <i class="fa-solid fa-play"></i>
+            </button>
 
-    <div class="controls">
+            <div class="progress-container" id="progressContainer">
+                <div class="progress" id="progress"></div>
+            </div>
 
-        <button id="playBtn">
-            <i class="fa-solid fa-play"></i>
-        </button>
+            <div class="time">
 
-        <div class="progress-container" id="progressContainer">
-            <div class="progress" id="progress"></div>
-        </div>
+                <span id="current">0:00</span>
 
-        <div class="time">
+                <span id="duration">0:00</span>
 
-            <span id="current">0:00</span>
+            </div>
 
-            <span id="duration">0:00</span>
+            <div class="volume">
 
-        </div>
+                <i class="fa-solid fa-volume-low"></i>
 
-        <div class="volume">
+                <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
 
-            <i class="fa-solid fa-volume-low"></i>
-
-            <input
-                    type="range"
-                    id="volume"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    value="1"
-            >
+            </div>
 
         </div>
 
     </div>
 
-</div>
-
-<audio id="audio">
-
-    <source src="../../assets/music/Azerbaycan_Himni.mp3" type="audio/mpeg">
-
-</audio>
-
-<script src="script.js"></script>
-
+    
+    <audio id="audio">
+        
+        <source src="../../assets/music/Eyyub_Yaqubov_Bakili_balasiyam.mp3" type="audio/mpeg">
+        
+    </audio>
+    
+    <script src="script.js"></script>
+    
 </body>
+
 </html>
