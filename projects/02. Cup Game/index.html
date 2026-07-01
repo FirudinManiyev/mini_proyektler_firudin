@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="az">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stəkan Oyunu</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🥤 Stəkan Oyunu</h1>
+
+        <p id="message">
+            Coin hansı stəkanın altındadır? Qarışdırıldıqdan sonra tapmağa çalış.
+        </p>
+
+        <div class="game-area">
+
+            <div class="cup" data-index="0">
+
+                <div class="coin"></div>
+
+                <div class="cup-top"></div>
+
+            </div>
+
+            <div class="cup" data-index="1">
+
+                <div class="coin"></div>
+
+                <div class="cup-top"></div>
+
+            </div>
+
+            <div class="cup" data-index="2">
+
+                <div class="coin"></div>
+
+                <div class="cup-top"></div>
+
+            </div>
+
+        </div>
+
+        <div class="buttons">
+
+            <button id="startBtn">
+                Qarışdır
+            </button>
+
+            <button id="restartBtn">
+                Yenidən Oyna
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
