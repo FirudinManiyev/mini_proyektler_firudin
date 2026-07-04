@@ -231,6 +231,16 @@ body {
     cursor: pointer;
 }
 
+.github-link {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: rgba(27, 45, 136, 0.6);
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 100;
+}
+
 @media(max-width:760px) {
 
     .player {
@@ -243,23 +253,27 @@ body {
     .record-area {
 
         flex-direction: column;
-        gap: 40px;
+        gap: 20px;
         min-height: auto;
+        padding-bottom: 10px;
 
     }
 
     .tonearm {
 
-        position: relative;
-        right: auto;
-        top: auto;
-        transform: rotate(-35deg);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-35deg);
+        width: 120px;
+        height: 150px;
+        z-index: 10;
 
     }
 
     .tonearm.active {
 
-        transform: rotate(0deg);
+        transform: translate(-50%, -50%) rotate(0deg);
 
     }
 
@@ -267,6 +281,66 @@ body {
 
         width: 220px;
         height: 220px;
+
+    }
+
+}
+
+@media(max-width:480px) {
+
+    .player {
+
+        width: 92%;
+        padding: 20px;
+
+    }
+
+    .record {
+
+        width: 180px;
+        height: 180px;
+
+    }
+
+    .label {
+
+        width: 70px;
+        height: 70px;
+        font-size: 10px;
+
+    }
+
+    .tonearm {
+
+        width: 100px;
+        height: 130px;
+
+    }
+
+    .arm {
+
+        height: 110px;
+
+    }
+
+    .head {
+
+        width: 24px;
+        height: 32px;
+
+    }
+
+    #playBtn {
+
+        width: 70px;
+        height: 70px;
+        font-size: 24px;
+
+    }
+
+    .time {
+
+        font-size: 12px;
 
     }
 
