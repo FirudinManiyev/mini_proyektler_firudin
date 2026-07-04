@@ -23,10 +23,34 @@ body {
     inset: 0;
 
     background:
-        radial-gradient(circle at top left, #2563eb33, transparent 35%),
-        radial-gradient(circle at bottom right, #7c3aed33, transparent 35%);
+        radial-gradient(circle at top left, #2563eb33, transparent 40%),
+        radial-gradient(circle at top right, #7c3aed33, transparent 40%),
+        radial-gradient(circle at bottom left, #06b6d433, transparent 40%),
+        radial-gradient(circle at bottom right, #ec489933, transparent 40%);
 
     z-index: -1;
+
+    animation: gradientShift 15s ease-in-out infinite;
+
+}
+
+@keyframes gradientShift {
+
+    0%, 100% {
+        background:
+            radial-gradient(circle at top left, #2563eb33, transparent 40%),
+            radial-gradient(circle at top right, #7c3aed33, transparent 40%),
+            radial-gradient(circle at bottom left, #06b6d433, transparent 40%),
+            radial-gradient(circle at bottom right, #ec489933, transparent 40%);
+    }
+
+    50% {
+        background:
+            radial-gradient(circle at top left, #7c3aed33, transparent 40%),
+            radial-gradient(circle at top right, #06b6d433, transparent 40%),
+            radial-gradient(circle at bottom left, #ec489933, transparent 40%),
+            radial-gradient(circle at bottom right, #2563eb33, transparent 40%);
+    }
 
 }
 
@@ -43,6 +67,28 @@ header h1 {
     font-size: 55px;
 
     margin-bottom: 15px;
+
+    background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+
+    animation: titleGlow 3s ease-in-out infinite;
+
+}
+
+@keyframes titleGlow {
+
+    0%, 100% {
+        filter: brightness(1);
+    }
+
+    50% {
+        filter: brightness(1.2);
+    }
 
 }
 
@@ -85,6 +131,18 @@ header p {
     background: rgba(255, 255, 255, .08);
 
     border: 1px solid rgba(255, 255, 255, .1);
+
+    transition: .3s;
+
+}
+
+.box:hover {
+
+    transform: translateY(-5px);
+
+    background: rgba(255, 255, 255, .12);
+
+    border-color: rgba(255, 255, 255, .2);
 
 }
 
@@ -162,7 +220,7 @@ header p {
 
     border-radius: 18px;
 
-    background: #2563eb;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
 
     display: flex;
 
@@ -173,6 +231,14 @@ header p {
     font-size: 32px;
 
     margin-bottom: 25px;
+
+    transition: .3s;
+
+}
+
+.card:hover .icon {
+
+    transform: rotate(10deg) scale(1.1);
 
 }
 
@@ -234,13 +300,21 @@ footer {
 
     header h1 {
 
-        font-size: 40px;
+        font-size: 36px;
+
+    }
+
+    header p {
+
+        font-size: 14px;
 
     }
 
     .projects h2 {
 
         text-align: center;
+
+        font-size: 28px;
 
     }
 
@@ -249,6 +323,44 @@ footer {
         width: 100%;
 
         max-width: 220px;
+
+    }
+
+    .cards {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .card {
+
+        padding: 25px;
+
+    }
+
+}
+
+@media(max-width:480px) {
+
+    header h1 {
+
+        font-size: 28px;
+
+    }
+
+    header {
+
+        padding: 50px 15px 30px;
+
+    }
+
+    .icon {
+
+        width: 60px;
+
+        height: 60px;
+
+        font-size: 26px;
 
     }
 
