@@ -14,7 +14,7 @@ const restartBtn = document.getElementById("restartBtn");
 // OYUN DƏYİŞƏNLƏRİ
 // ===========================
 
-let coinCup = 0;
+let coinCup = 0; // Coin-in olduğu stəkanın index-i (0, 1, və ya 2)
 let canChoose = false;
 let isShuffling = false;
 
@@ -88,12 +88,19 @@ function renderPositions() {
 
     });
 
+    // Coin-i də hərəkət etdir
+    moveCoinToCup(coinCup);
+
 }
 
 
 // Coin-i stəkanın altına yerləşdir
 
-function moveCoinToCup(index) {
+function moveCoinToCup(cupIndex) {
+
+    // Coin həmişə eyni stəkanın altında qalır
+    // Stəkanın cari mövqeyini tap
+    const cupPosition = positions[cupIndex];
 
     const coords = getCoords();
 
@@ -103,7 +110,7 @@ function moveCoinToCup(index) {
     if (window.innerWidth <= 480) cupWidth = 70;
     if (window.innerWidth <= 360) cupWidth = 60;
 
-    const xPos = coords[index] + cupWidth / 2; // Stəkanın mərkəzi
+    const xPos = coords[cupPosition] + cupWidth / 2; // Stəkanın mərkəzi
 
     coin.style.left = xPos + "px";
 
@@ -117,17 +124,7 @@ renderPositions();
 
 // Ekran dəyişəndə yenilə
 
-window.addEventListener("resize", () => {
-
-    renderPositions();
-
-    if (!isShuffling && !canChoose) {
-
-        moveCoinToCup(coinCup);
-
-    }
-
-});
+window.addEventListener("resize", renderPositions);
 
 
 // ===========================
