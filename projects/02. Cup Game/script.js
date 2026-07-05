@@ -3,7 +3,7 @@
 // ===========================
 
 const cups = [...document.querySelectorAll(".cup")];
-const coins = [...document.querySelectorAll(".coin")];
+const coin = document.getElementById("coin");
 
 const message = document.getElementById("message");
 const startBtn = document.getElementById("startBtn");
@@ -31,10 +31,17 @@ let positions = [0, 1, 2];
 
 const desktopX = [40, 285, 530];
 
+// Tablet koordinatları (768px)
 
-// Mobil koordinatları
+const tabletX = [0, 115, 230];
 
-const mobileX = [0, 115, 230];
+// Mobil koordinatları (480px)
+
+const mobileX = [0, 100, 200];
+
+// Kiçik mobil koordinatları (360px)
+
+const smallMobileX = [0, 85, 170];
 
 
 // ===========================
@@ -43,9 +50,21 @@ const mobileX = [0, 115, 230];
 
 function getCoords() {
 
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 360) {
+
+        return smallMobileX;
+
+    }
+
+    if (window.innerWidth <= 480) {
 
         return mobileX;
+
+    }
+
+    if (window.innerWidth <= 768) {
+
+        return tabletX;
 
     }
 
@@ -72,6 +91,25 @@ function renderPositions() {
 }
 
 
+// Coin-i stəkanın altına yerləşdir
+
+function moveCoinToCup(index) {
+
+    const coords = getCoords();
+
+    let cupWidth = 130; // Desktop
+
+    if (window.innerWidth <= 768) cupWidth = 85;
+    if (window.innerWidth <= 480) cupWidth = 70;
+    if (window.innerWidth <= 360) cupWidth = 60;
+
+    const xPos = coords[index] + cupWidth / 2; // Stəkanın mərkəzi
+
+    coin.style.left = xPos + "px";
+
+}
+
+
 // İlk yerləşmə
 
 renderPositions();
@@ -79,7 +117,17 @@ renderPositions();
 
 // Ekran dəyişəndə yenilə
 
-window.addEventListener("resize", renderPositions);
+window.addEventListener("resize", () => {
+
+    renderPositions();
+
+    if (!isShuffling && !canChoose) {
+
+        moveCoinToCup(coinCup);
+
+    }
+
+});
 
 
 // ===========================
@@ -93,7 +141,7 @@ function resetGame() {
     isShuffling = false;
 
     message.textContent =
-        "Coin hansı stəkanın altındadır?";
+        "Coin hansı stəkanın altındadır? \"Qarışdır\" düyməsini bas.";
 
     positions = [0, 1, 2];
 
@@ -105,15 +153,14 @@ function resetGame() {
 
         cup.classList.remove("correct");
         cup.classList.remove("wrong");
-        cup.classList.remove("shuffle");
+        cup.classList.remove("selected");
+        cup.classList.add("lifted");
 
     });
 
-    coins.forEach(c => {
+    coin.classList.remove("hidden");
 
-        c.classList.remove("show");
-
-    });
+    moveCoinToCup(coinCup);
 
 }
 
@@ -195,29 +242,37 @@ async function startShuffle() {
     cups.forEach(cup => {
         cup.classList.remove("correct");
         cup.classList.remove("wrong");
+        cup.classList.remove("selected");
     });
 
-    coins.forEach(c => c.classList.remove("show"));
+    // Coin gizlət
+    coin.classList.add("hidden");
 
-    // 12 dəfə qarışdır
+    // Stəkanları aşağı sal
+    cups.forEach(cup => cup.classList.remove("lifted"));
+    cups.forEach(cup => cup.classList.add("lowered"));
 
-    for (let i = 0; i < 12; i++) {
+    await sleep(600);
+
+    // 10 dəfə qarışdır
+
+    for (let i = 0; i < 10; i++) {
 
         const [a, b] = randomPair();
 
-        cups[a].classList.add("shuffle");
-        cups[b].classList.add("shuffle");
+        cups[a].classList.add("moving");
+        cups[b].classList.add("moving");
 
         swapPositions(a, b);
 
         renderPositions();
 
-        await sleep(650);
+        await sleep(500);
 
-        cups[a].classList.remove("shuffle");
-        cups[b].classList.remove("shuffle");
+        cups[a].classList.remove("moving");
+        cups[b].classList.remove("moving");
 
-        await sleep(60);
+        await sleep(50);
 
     }
 
@@ -241,7 +296,7 @@ cups.forEach((cup, index) => {
 
         canChoose = false;
 
-        coins[coinCup].classList.add("show");
+        cup.classList.add("selected");
 
         if (index === coinCup) {
 
@@ -261,12 +316,16 @@ cups.forEach((cup, index) => {
 
         }
 
+        // Bütün stəkanları yuxarı qaldır
+        cups.forEach(c => {
+            c.classList.remove("lowered");
+            c.classList.add("lifted");
+        });
+
+        // Coin-i göstər
+        coin.classList.remove("hidden");
+        moveCoinToCup(coinCup);
+
     });
 
 });
-
-// ===========================
-// DEBUG (istəsən sil)
-// ===========================
-
-// console.log("Coin:",coinCup);

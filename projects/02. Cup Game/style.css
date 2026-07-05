@@ -106,6 +106,68 @@ h1 {
 }
 
 /* ==========================
+   COIN
+========================== */
+
+.coin {
+
+    position: absolute;
+
+    bottom: 75px;
+
+    left: 50%;
+
+    transform: translateX(-50%) scale(1);
+
+    width: 58px;
+
+    height: 58px;
+
+    border-radius: 50%;
+
+    background:
+
+        linear-gradient(#ffe066, #f6c343);
+
+    border: 4px solid #d89b00;
+
+    z-index: 5;
+
+    transition: all .5s ease;
+
+}
+
+.coin::after {
+
+    content: "₼";
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    color: #8b5e00;
+
+}
+
+.coin.hidden {
+
+    opacity: 0;
+
+    transform: translateX(-50%) scale(0);
+
+}
+
+/* ==========================
    CUPS
 ========================== */
 
@@ -123,7 +185,10 @@ h1 {
 
     transition:
 
-        transform .65s cubic-bezier(.65, -0.25, .25, 1.2);
+        transform .65s cubic-bezier(.65, -0.25, .25, 1.2),
+        bottom .5s ease;
+
+    z-index: 10;
 
 }
 
@@ -147,6 +212,22 @@ h1 {
 
 }
 
+/* Stəkan yuxarıda (başlanğıc vəziyyət) */
+
+.cup.lifted {
+
+    bottom: 140px;
+
+}
+
+/* Stəkan aşağıda (oyun vəziyyəti) */
+
+.cup.lowered {
+
+    bottom: 55px;
+
+}
+
 /* Qarışdırma zamanı */
 
 .cup.moving {
@@ -155,11 +236,11 @@ h1 {
 
 }
 
-/* Havaya qalxma */
+/* Seçilmiş stəkan */
 
-.cup.lift {
+.cup.selected {
 
-    margin-bottom: 35px;
+    z-index: 30;
 
 }
 
@@ -167,7 +248,7 @@ h1 {
    CUP BODY
 ========================== */
 
-.cup-top {
+.cup-body {
 
     position: absolute;
 
@@ -179,11 +260,7 @@ h1 {
 
     background:
 
-        linear-gradient(to bottom,
-
-            #ff7b7b,
-
-            #d63031);
+        linear-gradient(to bottom, #ff7b7b, #d63031);
 
     border-radius: 0 0 70px 70px;
 
@@ -197,7 +274,7 @@ h1 {
 
 /* Üst hissə */
 
-.cup-top::before {
+.cup-body::before {
 
     content: "";
 
@@ -219,7 +296,7 @@ h1 {
 
 /* Qulp */
 
-.cup-top::after {
+.cup-body::after {
 
     content: "";
 
@@ -238,66 +315,6 @@ h1 {
     border-left: none;
 
     border-radius: 0 25px 25px 0;
-
-}
-
-/* ==========================
-   COIN
-========================== */
-
-.coin {
-
-    position: absolute;
-
-    bottom: 8px;
-
-    left: 50%;
-
-    transform: translateX(-50%) scale(0);
-
-    width: 58px;
-
-    height: 58px;
-
-    border-radius: 50%;
-
-    background:
-
-        linear-gradient(#ffe066,
-
-            #f6c343);
-
-    border: 4px solid #d89b00;
-
-    transition: .3s;
-
-}
-
-.coin.show {
-
-    transform: translateX(-50%) scale(1);
-
-}
-
-.coin::after {
-
-    content: "₼";
-
-    position: absolute;
-
-    inset: 0;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    font-size: 24px;
-
-    font-weight: 700;
-
-    color: #8b5e00;
 
 }
 
@@ -385,147 +402,15 @@ button:active {
    RESULT
 ========================== */
 
-.correct {
-
-    animation: correct .5s ease;
-
-}
-
-.correct .cup-top {
+.correct .cup-body {
 
     background: linear-gradient(#2ecc71, #27ae60);
 
 }
 
-.wrong {
-
-    animation: wrong .5s ease;
-
-}
-
-.wrong .cup-top {
+.wrong .cup-body {
 
     background: linear-gradient(#ff5f6d, #c0392b);
-
-}
-
-/* ==========================
-   ANIMATIONS
-========================== */
-
-@keyframes correct {
-
-    0% {
-
-        transform: scale(1);
-
-    }
-
-    50% {
-
-        transform: scale(1.08);
-
-    }
-
-    100% {
-
-        transform: scale(1);
-
-    }
-
-}
-
-@keyframes wrong {
-
-    0% {
-
-        transform: translateX(0);
-
-    }
-
-    25% {
-
-        transform: translateX(-8px);
-
-    }
-
-    50% {
-
-        transform: translateX(8px);
-
-    }
-
-    75% {
-
-        transform: translateX(-8px);
-
-    }
-
-    100% {
-
-        transform: translateX(0);
-
-    }
-
-}
-
-/* Qarışdırma zamanı stəkan havaya qalxır */
-
-@keyframes liftCup {
-
-    0% {
-
-        translate: 0 0;
-
-    }
-
-    50% {
-
-        translate: 0 -40px;
-
-    }
-
-    100% {
-
-        translate: 0 0;
-
-    }
-
-}
-
-.cup.shuffle {
-
-    animation: liftCup .6s ease;
-
-}
-
-/* Coin görünəndə */
-
-@keyframes coinPop {
-
-    0% {
-
-        transform: translateX(-50%) scale(0);
-
-    }
-
-    70% {
-
-        transform: translateX(-50%) scale(1.15);
-
-    }
-
-    100% {
-
-        transform: translateX(-50%) scale(1);
-
-    }
-
-}
-
-.coin.show {
-
-    animation: coinPop .4s ease;
 
 }
 
@@ -589,19 +474,19 @@ button:active {
 
     }
 
-    .cup-top {
+    .cup-body {
 
         height: 110px;
 
     }
 
-    .cup-top::before {
+    .cup-body::before {
 
         width: 100px;
 
     }
 
-    .cup-top::after {
+    .cup-body::after {
 
         width: 22px;
 
@@ -625,9 +510,161 @@ button:active {
 
     }
 
+    .cup.lifted {
+
+        bottom: 100px;
+
+    }
+
     button {
 
         width: 100%;
+
+    }
+
+}
+
+@media(max-width:480px) {
+
+    .container {
+
+        width: 92%;
+
+    }
+
+    h1 {
+
+        font-size: 1.8rem;
+
+    }
+
+    #message {
+
+        font-size: 13px;
+
+    }
+
+    .game-area {
+
+        width: 280px;
+
+        height: 220px;
+
+    }
+
+    .cup {
+
+        width: 70px;
+
+        height: 100px;
+
+        bottom: 40px;
+
+    }
+
+    .cup[data-index="0"] {
+
+        transform: translateX(0);
+
+    }
+
+    .cup[data-index="1"] {
+
+        transform: translateX(100px);
+
+    }
+
+    .cup[data-index="2"] {
+
+        transform: translateX(200px);
+
+    }
+
+    .cup-body {
+
+        height: 90px;
+
+    }
+
+    .cup-body::before {
+
+        width: 85px;
+
+    }
+
+    .cup-body::after {
+
+        width: 18px;
+
+        height: 35px;
+
+        right: -12px;
+
+    }
+
+    .coin {
+
+        width: 35px;
+
+        height: 35px;
+
+    }
+
+    .coin::after {
+
+        font-size: 15px;
+
+    }
+
+    .cup.lifted {
+
+        bottom: 85px;
+
+    }
+
+    button {
+
+        padding: 12px 24px;
+
+        font-size: 15px;
+
+    }
+
+}
+
+@media(max-width:360px) {
+
+    .game-area {
+
+        width: 260px;
+
+        height: 200px;
+
+    }
+
+    .cup {
+
+        width: 60px;
+
+        height: 85px;
+
+    }
+
+    .cup[data-index="1"] {
+
+        transform: translateX(85px);
+
+    }
+
+    .cup[data-index="2"] {
+
+        transform: translateX(170px);
+
+    }
+
+    .cup.lifted {
+
+        bottom: 75px;
 
     }
 
